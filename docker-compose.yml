@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  splunk:
+    container_name: splunk_container
+    image: splunk/splunk:9.1.4
+    environment:
+      - SPLUNK_START_ARGS=--accept-license
+      - SPLUNK_PASSWORD=password
+    ports:
+      - "28000:8000"
+      - "28089:8089"
+      - "29997:9997"
+    volumes:
+      - ./splunk_app:/opt/splunk/etc/apps
+      - ./nnnaanaa_data:/nnnaanaa_data # splunk data directory
+
+    restart: always  # コンテナの再起動設定

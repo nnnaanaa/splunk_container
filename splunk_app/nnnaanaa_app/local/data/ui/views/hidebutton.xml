@@ -1,0 +1,59 @@
+<form version="1.1" theme="light">
+  <label>HideButton</label>
+  <fieldset submitButton="false">
+    <input type="dropdown" token="tok_choice">
+      <label>選択1</label>
+      <choice value="kono">kono</choice>
+      <choice value="urunlu">urunlu</choice>
+      <choice value="nizyuago">nizyuago_san</choice>
+      <choice value="wadorudo">wadorudo</choice>
+      <choice value="kakikama">kakikama</choice>
+      <choice value="mike">mike</choice>
+      <initialValue>kono</initialValue>
+    </input>
+    <input type="radio" token="field1" searchWhenChanged="true">
+      <label>表示形式1</label>
+      <fieldForLabel>ChoicesKey</fieldForLabel>
+      <fieldForValue>ChoicesValue</fieldForValue>
+      <search>
+        <query>| inputlookup defChoiceList.csv
+| where match(Name, "$tok_choice$")
+| eval Choices=split(Choices, ",")
+| mvexpand Choices
+| eval ChoicesKey=mvindex(split(Choices, ":"), 0)
+| eval ChoicesValue=mvindex(split(Choices, ":"), 1)</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>$tok_choice$</title>
+      <input type="link" token="field2">
+        <label>表示形式2</label>
+        <fieldForLabel>ChoicesKey</fieldForLabel>
+        <fieldForValue>ChoicesValue</fieldForValue>
+        <search>
+          <query>| inputlookup defChoiceList.csv
+| where match(Name, "$tok_choice$")
+| eval Choices=split(Choices, ",")
+| mvexpand Choices
+| eval ChoicesKey=mvindex(split(Choices, ":"), 0)
+| eval ChoicesValue=mvindex(split(Choices, ":"), 1)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <initialValue>view</initialValue>
+      </input>
+      <table>
+        <search>
+          <query>index="_internal" sourcetype="splunk_web_access"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+</form>

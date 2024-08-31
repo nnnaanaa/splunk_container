@@ -1,0 +1,1 @@
+import{g as o}from"./chunk-VV54FNKQ.js";var l=o((p,e)=>{function f(r,t){return t||(t=r.slice(0)),Object.freeze(Object.defineProperties(r,{raw:{value:Object.freeze(t)}}))}e.exports=f,e.exports.__esModule=!0,e.exports.default=e.exports});export{l as a};
